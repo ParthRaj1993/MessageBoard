@@ -1,0 +1,39 @@
+
+<md-card *ngIf="!(_id)" class="content">
+<h1  md-dialog-title>New Message</h1>
+<div md-dialog-content >
+<table cellspacing="0" ><tr>
+    <td><md-form-field class="topic">
+      <input mdInput placeholder="Topic" #topic>
+    </md-form-field></td>
+    </tr><tr>
+    <td><md-form-field class="message" >
+      <textarea rows="5" mdInput placeholder="Message" #message></textarea>
+    </md-form-field></td>
+  </tr></table>
+</div>
+<div md-dialog-actions>
+  <button md-raised-button [md-dialog-close]="data" (click)="onSend(topic.value,message.value)" color="primary" tabindex="2">Send</button>
+  <button md-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancel</button>
+</div>
+</md-card>
+
+<md-card class="content"  *ngIf="(_id)">
+<h1 md-dialog-title>Edit Message</h1>
+<div md-dialog-content >
+<table cellspacing="0" ><tr>
+    <td><md-form-field class="topic">
+      <input mdInput placeholder="Topic" disabled  #topic> {{_topic}}
+      <p style="display:none" #id> {{_id}} </p>
+    </md-form-field></td>
+    </tr><tr>
+    <td><md-form-field class="message" >
+      <textarea rows="5" mdInput placeholder="Message" #message>{{_message}}</textarea>
+    </md-form-field></td>
+  </tr></table>
+</div>
+<div md-dialog-actions>
+  <button md-raised-button [md-dialog-close]="data" (click)="onSave(id.innerHTML,_topic,message.value)" color="primary" tabindex="2">Save</button>
+  <button md-raised-button color="warn" (click)="onNoClick()" tabindex="-1">Cancel</button>
+</div>
+</md-card>

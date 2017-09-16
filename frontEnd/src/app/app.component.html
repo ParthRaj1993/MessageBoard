@@ -1,0 +1,31 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+<md-card class="content">
+  <div class="outer">
+<md-card-header style="display: inline-block;">
+    <md-card-title>MESSAGE BOX  </md-card-title>
+  </md-card-header>
+  <button
+   md-raised-button class="edit" color="primary" style="margin-left:55%; display: inline;padding: 3px; "
+   (click)="openDialog()">Create Message</button>
+  </div>
+<md-card-content >
+<md-card *ngFor="let message of messages">
+  <md-card-header>
+    <md-card-title #top>{{message.topic | uppercase}}</md-card-title>
+  </md-card-header>
+  <md-card-content>
+    <p style="display:none" #id>{{message._id}}</p>
+    <p #text>
+     {{message.message}}
+    </p>
+  </md-card-content>
+  <md-card-actions>
+    <button md-raised-button class="edit" (click) ="onEdit(id.innerHTML,top.innerHTML,text.innerHTML)"
+    style="margin-left:70%; background-color: #e7e7e7; color: black;">Edit</button>
+  </md-card-actions>
+</md-card>
+</md-card-content>
+</md-card>
+
+</div>
