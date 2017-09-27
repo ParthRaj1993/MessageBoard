@@ -1,0 +1,7 @@
+create database messageBox;
+
+CREATE TABLE inbox (
+    id varchar(255),
+    title varchar(255),
+    message varchar(2000)
+);

@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Registration Form</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+
+<script type="text/javascript">
+ window.onload=function onLoad(){
+$.ajax(
+    {
+        type: "GET",
+        url: "http://localhost:8080/load",
+        data: "{}",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        cache: false,
+        success: function (data) {
+        var trHTML = '';
+               console.log(data) ;
+               for (var i in data) {
+               	var name=data[i].title;
+               
+               var message=data[i].message;
+               var id=data[i].id;
+               //alert(name);
+  trHTML = trHTML+'<tr><td> <input type="text" class="'+id+'"  disabled value="'+name+'"></td><td><textarea class="'+id+'"  disabled  rows="4" cols="50">' +message+'</textarea></td><td colspan="2"><input type="button" id="edit" value="Edit" onclick=onEdit("'+id+'")><input type="button" id="edit" value="Delete" onclick=onDelete("'+id+'")></td></tr>';
+}
+$('#add').append(trHTML);
+        
+        },
+        
+        error: function (msg) {
+            
+            alert(msg.responseText);
+        }
+
+})
+}
+
+function onEdit(id){
+  alert(id);
+   $('.'+id).prop("disabled", false);
+}
+
+function onDelete(id){
+  alert("deleting");
+  $.ajax({
+    url: 'http://localhost:8080/ondelete?id='+id,
+    type: 'GET',
+    success: function(result) {
+        location.reload();
+    }
+});
+}
+
+</script>
+
+</head>
+
+<body>
+  <div class="container">
+    <h1>Contact List App</h1>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>         
+          <th>message</th>
+          
+<th>edit/delete</th>
+        </tr>
+      </thead>
+      <tbody id="add">
+      </tbody>
+    </table>
+
+  </div>
+</body>
+</html>
