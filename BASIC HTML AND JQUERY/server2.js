@@ -61,16 +61,17 @@ console.log('>>>>>>>>>'+deletesql);
 	
 });
 
-app.put('/update', function(req,res){
+app.get('/update', function(req,res){
+	console.log(req.query.name);
 
-	
-	var updatesql = "UPDATE inbox SET title='"+req.query.name+"','message ='"+req.query.message+"wHERE id ='"+req.query.id+"'";
+	var updatesql= 'UPDATE inbox SET title="'+req.query.name+'",message="'+req.query.message+'" where id="'+req.query.id+'"';
+	//var updatesql = "UPDATE inbox SET title='"+req.query.name+"','message ='"+req.query.message+"where id ='"+req.query.id+"'";
 
 console.log('>>>>>>>>>'+updatesql);
   con.query(updatesql, function (err, result) {
     if (err) throw err;
   console.log("1 record updated");
-  
+  res.redirect("/view");
   })
 
 });

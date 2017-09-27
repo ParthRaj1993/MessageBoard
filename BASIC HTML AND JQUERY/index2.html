@@ -29,7 +29,7 @@ $.ajax(
                var message=data[i].message;
                var id=data[i].id;
                //alert(name);
-  trHTML = trHTML+'<tr><td> <input type="text" class="'+id+'"  disabled value="'+name+'"></td><td><textarea class="'+id+'"  disabled  rows="4" cols="50">' +message+'</textarea></td><td colspan="2"><input type="button" id="edit" value="Edit" onclick=onEdit("'+id+'")><input type="button" id="edit" value="Delete" onclick=onDelete("'+id+'")></td></tr>';
+  trHTML = trHTML+'<tr><td> <input type="text" class="'+id+'"  disabled value="'+name+'"></td><td><textarea class="'+id+'"  disabled  rows="4" cols="50">' +message+'</textarea></td><td colspan="2"><input type="button"  class="'+id+'" value="Edit" onclick=onEdit("'+id+'")><input type="button" class="'+id+'" value="Delete" onclick=onDelete("'+id+'")></td></tr>';
 }
 $('#add').append(trHTML);
         
@@ -44,19 +44,58 @@ $('#add').append(trHTML);
 }
 
 function onEdit(id){
-  alert(id);
-   $('.'+id).prop("disabled", false);
+ // alert(id+name+message);
+   
+   $("."+id)[0].disabled = false;
+   $("."+id)[1].disabled = false;
+    document.getElementsByClassName(id)[2].value = "Save";
+    document.getElementsByClassName(id)[2].setAttribute("onclick", 'onSave("'+id+'")');
+    document.getElementsByClassName(id)[3].value = "Cancel";
+    document.getElementsByClassName(id)[3].setAttribute("onclick", 'onCancel("'+id+'")');
+
+
 }
 
+function onSave(id){
+ // alert(id+name+message+"saving ");
+ var name=$("."+id)[0].value;
+ var message=$("."+id)[1].value;
+   $.ajax({
+    url: 'http://localhost:8080/update?id='+id+'&name='+name+'&message='+message,
+    type: 'GET',
+    success: function(result) {
+        location.reload();
+    }
+});
+}
+
+function onCancel(id){
+$("."+id)[0].disabled = true;
+$("."+id)[1].disabled = true;
+       document.getElementsByClassName(id)[2].value = "Edit";
+    document.getElementsByClassName(id)[2].setAttribute("onEdit", 'onEdit("'+id+'")');
+
+    document.getElementsByClassName(id)[3].value = "Delete";
+    document.getElementsByClassName(id)[3].setAttribute("onDelete", 'onCancel("'+id+'")');
+}
+
+
+
 function onDelete(id){
-  alert("deleting");
-  $.ajax({
+ if (confirm("Deleting... Are you sure?") == true) {
+      
+       $.ajax({
     url: 'http://localhost:8080/ondelete?id='+id,
     type: 'GET',
     success: function(result) {
         location.reload();
     }
 });
+
+    } else {
+        
+    }
+
 }
 
 </script>
